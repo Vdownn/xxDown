@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="{{ 'pt' if lang=='pt' else 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ t.site_name }} — {{ t.tagline }}</title>
+  <meta name="description" content="{{ t.tagline }}">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="alternate" hreflang="pt" href="{{ url_for('home', lang='pt', _external=True) }}"/>
+  <link rel="alternate" hreflang="en" href="{{ url_for('home', lang='en', _external=True) }}"/>
+  {% if canonical %}<link rel="canonical" href="{{ canonical }}"/>{% endif %}
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="{{ url_for('home', lang=lang) }}">
+      <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="logo" />
+      <span>{{ t.site_name }}</span>
+    </a>
+    <nav>
+      <a href="{{ url_for('blog', lang=lang) }}">{{ t.blog_title }}</a>
+      <a href="{{ url_for('page_about', lang=lang) }}">{{ t.footer_nav[0] }}</a>
+      <a href="{{ url_for('page_privacy', lang=lang) }}">{{ t.footer_nav[1] }}</a>
+      <a href="{{ url_for('page_terms', lang=lang) }}">{{ t.footer_nav[2] }}</a>
+      <a href="{{ url_for('contact', lang=lang) }}">{{ t.footer_nav[3] }}</a>
+      <div class="lang-switch">
+        <a class="{{ 'active' if lang=='pt' else '' }}" href="{{ url_for(request.endpoint or 'home', **dict(request.view_args or {}, lang='pt')) }}">{{ t.lang_pt }}</a>
+        <span>•</span>
+        <a class="{{ 'active' if lang=='en' else '' }}" href="{{ url_for(request.endpoint or 'home', **dict(request.view_args or {}, lang='en')) }}">{{ t.lang_en }}</a>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <strong>{{ t.site_name }}</strong>
+        <p>{{ t.adsense_note }}</p>
+      </div>
+      <div class="footer-links">
+        <a href="{{ url_for('page_about', lang=lang) }}">{{ t.footer_nav[0] }}</a>
+        <a href="{{ url_for('page_privacy', lang=lang) }}">{{ t.footer_nav[1] }}</a>
+        <a href="{{ url_for('page_terms', lang=lang) }}">{{ t.footer_nav[2] }}</a>
+        <a href="{{ url_for('contact', lang=lang) }}">{{ t.footer_nav[3] }}</a>
+        <a href="{{ url_for('blog', lang=lang) }}">{{ t.footer_nav[4] }}</a>
+      </div>
+    </div>
+    <p class="disclaimer">{{ t.legal_disclaimer }}</p>
+  </footer>
+</body>
+</html>

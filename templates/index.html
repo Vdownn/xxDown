@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="hero-left">
+    <h1>{{ t.tagline }}</h1>
+    <p class="hero-cta">{{ t.hero_cta }}</p>
+    <form class="download-form" id="download-form" method="POST" action="{{ url_for('download') }}">
+      <input type="url" id="video_url" name="url" placeholder="{{ t.download_placeholder }}" required>
+      <label for="format">{{ t.format_label }}</label>
+      <select id="format" name="format">
+        <option value="mp4">{{ t.mp4_option }}</option>
+        <option value="mp3">{{ t.mp3_option }}</option>
+      </select>
+      <button type="submit">{{ t.download_button }}</button>
+    </form>
+    <div id="status" class="status">{{ t.status_ready }}</div>
+  </div>
+  <div class="hero-right">
+    <img src="{{ url_for('static', filename='img/hero_devices.svg') }}" alt="devices">
+  </div>
+</section>
+<section class="tools">
+  <h2>{{ t.tools_title }}</h2>
+  <div class="tool-grid">
+    {% for tool in t.tools %}<div class="tool">{{ tool }}</div>{% endfor %}
+  </div>
+</section>
+<section class="features">
+  <h2>{{ t.features_title }}</h2>
+  <div class="feature-grid">
+    <div class="feature">
+      <div class="pill pill-youtube">YouTube</div>
+      <h3>{{ t.feature_easy }}</h3>
+    </div>
+    <div class="feature">
+      <div class="pill pill-instagram">Instagram</div>
+      <h3>{{ t.feature_quality }}</h3>
+    </div>
+    <div class="feature">
+      <div class="pill pill-tiktok">TikTok</div>
+      <h3>{{ t.feature_unlimited }}</h3>
+    </div>
+  </div>
+</section>
+<section class="howto">
+  <h2>{{ t.howto_title }}</h2>
+  <ol>
+    {% for step in t.howto_steps %}<li>{{ step }}</li>{% endfor %}
+  </ol>
+</section>
+{% endblock %}

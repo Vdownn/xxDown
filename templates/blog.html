@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t.blog_title }}</h1>
+<ul class="post-list">
+{% for p in posts %}
+  <li><a href="{{ url_for('post', slug=p['slug'], lang=lang) }}">{{ p['title'] }}</a> — <small>{{ p['date'] }}</small></li>
+{% endfor %}
+</ul>
+{% endblock %}
